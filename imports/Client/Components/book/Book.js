@@ -6,11 +6,32 @@ export default class Book extends Component {
     render() {
         return (
             <div>
-                <li>Nombre libro:{this.props.book.text}</li>
-                <li>Fecha creacion :{this.props.book.genero}</li>
+                <br/>
+                <div className="row contenedora">
+                    <div className="col-sm-4 ">
+                        <br/>
+                        <img className="imagenLibro" src={this.props.book.imagen} alt=""/><br/>
+                        <br/>
+                        <p className="descLibro">Nombre del libro: {this.props.book.nombre}</p>
+                        <p className="descLibro">Genero: {this.props.book.genero}</p>
+                        <p className="descLibro">idioma: {this.props.book.idioma}</p>
+                        <p className="descLibro"> <img className="landdl" src="https://noticiasmicrojuris.files.wordpress.com/2013/10/facebook-like.png" alt=""/> : {this.props.book.likes} </p>
+                        <p className="descLibro"><img className="landdl" src="https://timedotcom.files.wordpress.com/2014/12/dislike.jpeg?h=580" alt=""/>: {this.props.book.dislikes} </p>
 
+                    </div>
+
+                    <div className="col-sm-8 ">
+                        <h2 className="tituloLibro">Historia:</h2><br/>
+                        <p className="historia">{this.props.book.texto} </p>
+                    </div>
+                </div>
+                <br/>
+                <br/>
 
             </div>
+
+
+
 
         );
     }

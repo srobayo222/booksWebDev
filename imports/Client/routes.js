@@ -7,8 +7,9 @@ const browserHistory = createBrowserHistory();
 
 import mainPage from "./Components/mainPage";
 import Task from "./Components/task/App";
-import Book from "./Components/book/App"
-
+import Book from "./Components/book/App";
+import HomeUI from "./Components/globalUsuarioInvitado/homeUI";
+import HomeUser from "./Components/globalusuariopro/home";
 
 export const renderRoutes = () => (
     <Router history={browserHistory}>
@@ -16,6 +17,9 @@ export const renderRoutes = () => (
             <Route exact path="/" component={mainPage}/>
             <Route path="/holi" component={Task}/>
             <Route path="/uiBooks" component={Book}/>
+            <Route path="/ui" component={HomeUI}/>
+            <Route path="/user" component={HomeUser}/>
+
 
         </div>
     </Router>

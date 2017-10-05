@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from "prop-types";
 import Book from './Book';
 import {Books} from "../../../api/books";
+import Header from "../globalUsuarioInvitado/header"
 
 // App component - represents the whole app
 class App extends Component {
@@ -20,8 +21,10 @@ class App extends Component {
     render() {
         return (
             <div className="container">
+                <Header/>
+                <br/><br/><br/><br/><br/><br/>
                 <header>
-                    <h1>Books List</h1>
+                    <h1>Listado de libros</h1>
                 </header>
                 <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
                     <input
@@ -30,9 +33,11 @@ class App extends Component {
                         placeholder="Type to add new tasks"
                     />
                 </form>
-                <ul>
+
                     {this.renderTasks()}
-                </ul>
+
+
+
             </div>
         );
     }
