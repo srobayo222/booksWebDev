@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
-import Book from '../book/Book';
+import Book from './Book';
 import { Books } from "../../../api/books";
 
 // App component - represents the whole app
@@ -19,17 +19,16 @@ class App extends Component {
 
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        const genre = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-
 
         Books.insert({
             text,
-            genre :"",
-            language :"",
-            story :"",
+            genero :"",
+            idioma :"",
+            texto :"",
             likes: 0,
             dislikes: 0,
-            date: "hoyi2" // current time
+            mG:"hidden",
+            mL:"hidden"
         });
 
         // Clear form
@@ -45,12 +44,14 @@ class App extends Component {
                     <h1>Books List</h1>
                 </header>
                 <h3>Browse book</h3>
+                <p><input
+                    type="text" placeholder="buscar libro" /></p>
                 <h3>Add new book</h3>
                 <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
                     <p><input
                         type="text"
                         ref="textInput"
-                        placeholder="Type the new books title" /></p>
+                        placeholder="Escriba nombre del nuevo libro" /></p>
                 </form>
                 <ul>
                     {this.renderTasks()}
