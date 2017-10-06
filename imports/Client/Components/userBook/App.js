@@ -3,14 +3,23 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from "prop-types";
 import ReactDOM from 'react-dom';
 import Book from './Book';
+import { Meteor } from 'meteor/meteor';
 import { Books } from "../../../api/books";
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 // App component - represents the whole app
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+ 
+    this.state = {
+      busqueda: "",
+    };
+  }
 
-    renderTasks() {
-        return this.props.books.map((book) => (
+  renderTasks() {
+      return this.props.books.map((book) => (
             <Book key={book._id} book={book} />
         ));
     }
@@ -30,7 +39,9 @@ class App extends Component {
             dislikes: 0,
             mG:"hidden",
             mL: "hidden",
-            mI: "hidden"
+            mI: "hidden",
+            owner: Meteor.userId(),           // _id of logged in user
+            username: Meteor.user().username,  // username of logged in user
         });
 
         // Clear form
@@ -38,6 +49,10 @@ class App extends Component {
 
 
     }
+    handleChange(event) {
+        this.setState({ busqueda: event.target.value });
+        console.log(this.state.busqueda);
+     }
 
     render() {
         return (
@@ -45,16 +60,19 @@ class App extends Component {
                 <header>
                     <h1>Books List</h1>
                 </header>
-                <h3>Browse book</h3>
-                <p><input
-                    type="text" placeholder="buscar libro" /></p>
-                <h3>Add new book</h3>
-                <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
-                    <p><input
-                        type="text"
-                        ref="textInput"
-                        placeholder="Escriba nombre del nuevo libro" /></p>
-                </form>
+                <AccountsUIWrapper />
+                <h3>Buscar Libro</h3>
+                <p><input type="text" placeholder="buscar libro" onChange={ this.handleChange.bind(this) } /></p>
+                {this.props.currentUser ?
+                  <div>
+                <h3>Agregar Nuevo Libro</h3>
+                    <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
+                        <p><input
+                            type="text"
+                            ref="textInput"
+                            placeholder="Escriba nombre del nuevo libro" /></p>
+                    </form> </div>: ''
+                    }
                 <ul>
                     {this.renderTasks()}
                 </ul>
@@ -66,10 +84,12 @@ class App extends Component {
 }
 App.propTypes = {
     books: PropTypes.array.isRequired,
+    currentUser: PropTypes.object,
 };
 
 export default createContainer(() => {
     return {
         books: Books.find({}).fetch(),
+        currentUser: Meteor.user(),
     };
 }, App);
