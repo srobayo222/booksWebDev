@@ -21,6 +21,7 @@ class App extends Component {
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
         Books.insert({
+            imagen: "https://d30y9cdsu7xlg0.cloudfront.net/png/3688-200.png",
             text,
             genero :"",
             idioma :"",
@@ -28,7 +29,8 @@ class App extends Component {
             likes: 0,
             dislikes: 0,
             mG:"hidden",
-            mL:"hidden"
+            mL: "hidden",
+            mI: "hidden"
         });
 
         // Clear form

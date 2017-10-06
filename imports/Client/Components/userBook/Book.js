@@ -14,7 +14,10 @@ export default class Book extends Component {
                 <div className="row contenedora">
                     <div className="col-sm-4 ">
                         <br />
-                        <img className="imagenLibro" src={this.props.book.imagen} alt="" /><br />
+                        <img src={this.props.book.imagen} onClick={this.mostrarImagen.bind(this)} alt="" height="100" width="100" /><br />
+                        <form className={this.props.book.mI} onSubmit={this.cambiarImagen.bind(this)}>
+                            <input type="text" ref="textInputIm" placeholder="Direccion url de la imagen" />
+                        </form>
                         <br />
                         <p className="descLibro">Nombre del libro: {this.props.book.text}</p>
                         <p className="descLibro" onClick={this.mostrarGenero.bind(this)}>Genero: {this.props.book.genero}</p>
@@ -25,8 +28,8 @@ export default class Book extends Component {
                         <form className={this.props.book.mL} onSubmit={this.editarLan.bind(this)}>
                             <input type="text" ref="textInputo" placeholder={this.props.book.idioma} />
                         </form>
-                        <p className="descLibro"> <img className="landdl" onClick={this.darLike.bind(this)} src="https://noticiasmicrojuris.files.wordpress.com/2013/10/facebook-like.png" alt="" /> : {this.props.book.likes} </p>
-                        <p className="descLibro"><img className="landdl" onClick={this.darDislike.bind(this)} src="https://timedotcom.files.wordpress.com/2014/12/dislike.jpeg?h=580" alt="" />: {this.props.book.dislikes} </p>
+                        <p > <img onClick={this.darLike.bind(this)} src="https://noticiasmicrojuris.files.wordpress.com/2013/10/facebook-like.png" alt="" height="60" width="60" /> : {this.props.book.likes} </p>
+                        <p ><img onClick={this.darDislike.bind(this)} src="https://timedotcom.files.wordpress.com/2014/12/dislike.jpeg?h=580" alt="" height="50" width="55"/>: {this.props.book.dislikes} </p>
                     </div>
 
                     <div className="col-sm-8 ">
@@ -92,9 +95,24 @@ export default class Book extends Component {
     editarStory() {
         event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        nText = (this.props.book.texto + text);
+        nText = (this.props.book.texto + " "+ text);
         Books.update(this.props.book._id, {
             $set: { texto: nText },
+        });
+    }
+    cambiarImagen() {
+        event.preventDefault();
+        const text = ReactDOM.findDOMNode(this.refs.textInputIm).value.trim();
+        Books.update(this.props.book._id, {
+            $set: {
+                imagen: text,
+                mI: "hidden"
+            },
+        });
+    }
+    mostrarImagen() {
+        Books.update(this.props.book._id, {
+            $set: { mI: "" },
         });
     }
 
