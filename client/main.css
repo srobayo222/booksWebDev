@@ -12,6 +12,10 @@ input[type=text], select {
     border-radius: 4px;
     box-sizing: border-box;
 }
+.iniMainPage
+{
+    background-image: url(http://www.comunidadbaratz.com/wp-content/uploads/libro-edicion-2015.jpg);
+}
 
 .imagenJumbo {
     width: 100%;

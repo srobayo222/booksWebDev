@@ -21,7 +21,7 @@ export const renderRoutes = () => (
             <Route path="/ui" component={HomeUI}/>
             <Route path="/user" component={HomeUser} />
             <Route path="/userBooks" component={UserBook} />
-            <Route path="/" component={UserBook} />
+
 
 
         </div>
