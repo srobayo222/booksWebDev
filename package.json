@@ -2,11 +2,11 @@
   "name": "booksWebDev",
   "private": true,
   "engines": {
-    "node": "6.9.2",
-    "npm": "3.10.9"
+    "node": "8.5.0",
+    "npm": "5.4.2"
   },
   "scripts": {
-    "start": "meteor run"
+    "start": "npm start"
   },
   "dependencies": {
     "babel-runtime": "^6.20.0",
