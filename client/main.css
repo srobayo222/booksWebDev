@@ -28,6 +28,12 @@ input[type=text], select {
 {
     text-align: center;
 }
+textarea {
+    border: none;
+    resize: none;
+    width: 700px;
+    height: 150px;
+}
 
 input[type=submit] {
     width: 100%;

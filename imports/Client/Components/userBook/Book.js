@@ -6,6 +6,15 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 // Task component - represents a single todo item
 class Book extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            noDioLike: true,
+            noDioDislike: true
+        };
+    }
+
     render() {
         const bookClassName = this.props.book.genre ? 'checked' : '';
         return (
@@ -32,21 +41,26 @@ class Book extends Component {
                                 <input type="text" ref="textInputo" placeholder={this.props.book.idioma} />
                             </form> : ''}
                         <p > <img onClick={this.darLike.bind(this)} src="https://noticiasmicrojuris.files.wordpress.com/2013/10/facebook-like.png" alt="" height="60" width="60" /> : {this.props.book.likes} </p>
-                        <p ><img onClick={this.darDislike.bind(this)} src="https://timedotcom.files.wordpress.com/2014/12/dislike.jpeg?h=580" alt="" height="50" width="55"/>: {this.props.book.dislikes} </p>
+                        <p ><img onClick={this.darDislike.bind(this)} src="https://timedotcom.files.wordpress.com/2014/12/dislike.jpeg?h=580" alt="" height="50" width="55" />: {this.props.book.dislikes} </p>
                     </div>
-
                     <div className="col-sm-8 ">
                         <h2 className="tituloLibro">Historia:</h2><br />
                         {this.props.currentUser ?
-                        <form onSubmit={this.editarStory.bind(this)}>
-                            <input type="text" ref="textInput" placeholder="Agregar historia"  />
-                        </form>: '' }
+                            <form onSubmit={this.editarStory.bind(this)}>
+                                <input type="text" ref="textInput" placeholder="Agregar historia" />
+                            </form> : ''}
                         <p className="historia">{this.props.book.texto}</p>
-                    </div>{this.props.currentUser ?
-                        <button className="delete btn" onClick={this.deleteThisTask.bind(this)}> Borrar Libro</button> : ''}
-                    <p><span className="text">
-                        Escrito por:<strong>{this.props.book.username}</strong>
-                    </span></p>
+                        {this.props.currentUser ?
+                            <button className="delete btn" onClick={this.deleteThisTask.bind(this)}> Borrar Libro</button> : ''}
+                        <p><span className="text">
+                            Escrito por:<strong>{this.props.book.username}</strong>
+                        </span></p><br />
+                        <p>Comentarios:</p>
+                        {this.props.currentUser ?
+                            <form onSubmit={this.addComment.bind(this)}>
+                                <input type="text" ref="textInputco" placeholder="Agregar Comentario" />
+                            </form> : ''}
+                        <p className="comentario"><textarea readOnly>{this.props.book.comments}</textarea></p></div>
                 </div>
                 <br />
                 <br />
@@ -64,23 +78,28 @@ class Book extends Component {
         });
     }
     mostrarGenero() {
-            Books.update(this.props.book._id, {
-                $set: { mG: "" },
-            });
+        Books.update(this.props.book._id, {
+            $set: { mG: "" },
+        });
     }
     darLike() {
-        const likes = this.props.book.likes;
-        const nLikes = likes + 1;
-         Books.update(this.props.book._id, {
-            $set: { likes: nLikes },
-        });
+        if (this.props.currentUser) {
+            const likes = this.props.book.likes;
+            const nLikes = likes + 1;
+            Books.update(this.props.book._id, {
+                $set: { likes: nLikes },
+            });
+            this.setState({ noDioLike: false });
+        }
     }
     darDislike() {
-        const dLikes = this.props.book.dislikes;
-        const nDlikes = dLikes + 1;
-        Books.update(this.props.book._id, {
-            $set: { dislikes: nDlikes },
-        });
+        if (this.props.currentUser && this.state.noDioLike) {
+            const dLikes = this.props.book.dislikes;
+            const nDlikes = dLikes + 1;
+            Books.update(this.props.book._id, {
+                $set: { dislikes: nDlikes },
+            });
+        }
     }
 
     editarLan() {
@@ -107,6 +126,14 @@ class Book extends Component {
             $set: { texto: nText },
         });
     }
+    addComment() {
+        event.preventDefault();
+        const text = ReactDOM.findDOMNode(this.refs.textInputco).value.trim();
+        nText = (this.props.book.comments + "\n" + text + "               usuario:" + Meteor.user().username +".");
+        Books.update(this.props.book._id, {
+            $set: { comments: nText },
+        });
+    }
     cambiarImagen() {
         event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInputIm).value.trim();
@@ -124,7 +151,7 @@ class Book extends Component {
     }
 
     deleteThisTask() {
-        Books.remove(this.props.book._id);
+            Books.remove(this.props.book._id);
     }
 }
 Book.propTypes = {

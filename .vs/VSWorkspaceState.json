@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\client",
+    "\\imports",
+    "\\imports\\api",
+    "\\imports\\Client",
+    "\\imports\\Client\\Components",
+    "\\imports\\Client\\Components\\userBook",
+    "\\imports\\startup"
+  ],
+  "SelectedNode": "\\client\\main.js",
+  "PreviewInSolutionExplorer": false
+}

@@ -14,14 +14,17 @@ class App extends Component {
     super(props);
  
     this.state = {
-      busqueda: "",
+        busqueda: false,
+        aBuscar: "",
+        libros: []
+
     };
   }
 
   renderTasks() {
-      return this.props.books.map((book) => (
-            <Book key={book._id} book={book} />
-        ));
+          return this.props.books.map((book) => (
+              <Book key={book._id} book={book}  />
+          ));
     }
     handleSubmit() {
         event.preventDefault();
@@ -37,6 +40,7 @@ class App extends Component {
             texto :"",
             likes: 0,
             dislikes: 0,
+            comments: "",
             mG:"hidden",
             mL: "hidden",
             mI: "hidden",
@@ -49,9 +53,14 @@ class App extends Component {
 
 
     }
-    handleChange(event) {
-        this.setState({ busqueda: event.target.value });
-        console.log(this.state.busqueda);
+    handleChange() {
+        const text = ReactDOM.findDOMNode(this.refs.textInputo).value.trim();
+        console.log(text);
+        this.setState({
+            aBuscar: text,
+            busqueda: true
+        });
+        console.log("hola"+ this.state.aBuscar);
      }
 
     render() {
@@ -62,7 +71,11 @@ class App extends Component {
                 </header>
                 <AccountsUIWrapper />
                 <h3>Buscar Libro</h3>
-                <p><input type="text" placeholder="buscar libro" onChange={ this.handleChange.bind(this) } /></p>
+                <form className="new-task" onSubmit={this.handleChange.bind(this)} ><p><input
+                        type="text"
+                        ref="textInputo"
+                        placeholder="Buscar libro" /></p>
+                </form>
                 {this.props.currentUser ?
                   <div>
                 <h3>Agregar Nuevo Libro</h3>
