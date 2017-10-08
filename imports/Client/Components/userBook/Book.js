@@ -18,7 +18,7 @@ class Book extends Component {
     render() {
         const bookClassName = this.props.book.genre ? 'checked' : '';
         return (
-            <div>
+            <div className={this.props.book.busquedaH} >
                 <br />
                 <div className="row contenedora">
                     <div className="col-sm-4 ">
@@ -61,6 +61,7 @@ class Book extends Component {
                                 <input type="text" ref="textInputco" placeholder="Agregar Comentario" />
                             </form> : ''}
                         <p className="comentario"><textarea readOnly>{this.props.book.comments}</textarea></p></div>
+                    <button className={this.props.book.botonBusqueda} onClick={this.salirBusqueda.bind(this)}>Salir de Busqueda</button>
                 </div>
                 <br />
                 <br />
@@ -80,6 +81,11 @@ class Book extends Component {
     mostrarGenero() {
         Books.update(this.props.book._id, {
             $set: { mG: "" },
+        });
+    }
+    salirBusqueda() {
+        Books.update(this.props.book._id, {
+            $set: { busquedaH: "hidden" },
         });
     }
     darLike() {

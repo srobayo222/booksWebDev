@@ -14,9 +14,7 @@ class App extends Component {
     super(props);
  
     this.state = {
-        busqueda: false,
-        aBuscar: "",
-        libros: []
+        busqueda: "hidden",
 
     };
   }
@@ -44,6 +42,8 @@ class App extends Component {
             mG:"hidden",
             mL: "hidden",
             mI: "hidden",
+            busquedaH: "",
+            botonBusqueda: "hidden",
             owner: Meteor.userId(),           // _id of logged in user
             username: Meteor.user().username,  // username of logged in user
         });
@@ -56,14 +56,43 @@ class App extends Component {
     handleChange() {
         const text = ReactDOM.findDOMNode(this.refs.textInputo).value.trim();
         console.log(text);
-        this.setState({
-            aBuscar: text,
-            busqueda: true
-        });
-        console.log("hola"+ this.state.aBuscar);
-     }
+        this.setState({ busqueda: "" });
+        for (i = 0; i < this.props.books.length; i++) {
+                Books.update(this.props.books[i]._id, {
+                    $set: {
+                        busquedaH: "hidden"
+                    },
+                });
+        }
+        for (i = 0; i < this.props.books.length; i++) {
+            if (this.props.books[i].text == text) {
+                Books.update(this.props.books[i]._id, {
+                    $set: {
+                        busquedaH: "",
+                        botonBusqueda: ""
+                    },
+                });
+            }
+        }
+    }
 
     render() {
+        paila = true;
+        for (i = 0; i < this.props.books.length; i++) {
+            if (this.props.books[i].busquedaH == "") {
+                paila = false;
+            }
+        }
+        if (paila) {
+            for (i = 0; i < this.props.books.length; i++) {
+                Books.update(this.props.books[i]._id, {
+                    $set: {
+                        busquedaH: "",
+                        botonBusqueda: "hidden"
+                    },
+                });
+            }
+        }
         return (
             <div className="container">
                 <header>
@@ -76,6 +105,7 @@ class App extends Component {
                         ref="textInputo"
                         placeholder="Buscar libro" /></p>
                 </form>
+                <button className={this.state.busqueda} onClick={this.abrrirBoton.bind(this)}> Borrar Libro</button>
                 {this.props.currentUser ?
                   <div>
                 <h3>Agregar Nuevo Libro</h3>
@@ -94,6 +124,9 @@ class App extends Component {
     }
 
 
+    abrrirBoton() {
+        this.setState({ busqueda: "hidden" });
+    }
 }
 App.propTypes = {
     books: PropTypes.array.isRequired,
