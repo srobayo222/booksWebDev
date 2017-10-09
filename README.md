@@ -1,2 +1,2 @@
 # booksWebDev
-por Diego Rodriguez y Juan Pablo Camacho
+por Diego Rodriguez & Juan Pablo Camacho
