@@ -48,7 +48,9 @@ App.propTypes = {
 };
 
 export default createContainer(() => {
+    Meteor.subscribe('books');
     return {
         books: Books.find({}).fetch(),
+        currentUser: Meteor.user(),
     };
 }, App);
