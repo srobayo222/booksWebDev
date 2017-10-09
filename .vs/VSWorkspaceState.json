@@ -6,9 +6,9 @@
     "\\imports\\api",
     "\\imports\\Client",
     "\\imports\\Client\\Components",
-    "\\imports\\Client\\Components\\userBook",
-    "\\imports\\startup"
+    "\\imports\\Client\\Components\\book",
+    "\\imports\\Client\\Components\\userBook"
   ],
-  "SelectedNode": "\\client\\main.js",
+  "SelectedNode": "\\imports\\api\\books.js",
   "PreviewInSolutionExplorer": false
 }

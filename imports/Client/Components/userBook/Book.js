@@ -84,19 +84,14 @@ class Book extends Component {
         if (this.props.currentUser) {
             const likes = this.props.book.likes;
             const nLikes = likes + 1;
-            Books.update(this.props.book._id, {
-                $set: { likes: nLikes },
-            });
-            this.setState({ noDioLike: false });
+            Meteor.call('books.darLike', this.props.book._id, likes, nLikes);
         }
     }
     darDislike() {
-        if (this.props.currentUser && this.state.noDioLike) {
+        if (this.props.currentUser) {
             const dLikes = this.props.book.dislikes;
             const nDlikes = dLikes + 1;
-            Books.update(this.props.book._id, {
-                $set: { dislikes: nDlikes },
-            });
+            Meteor.call('books.darDislike', this.props.book._id, dLikes, nDlikes);
         }
     }
 
@@ -113,27 +108,16 @@ class Book extends Component {
         Meteor.call('books.editarStory', this.props.book._id, this.props.book.texto, text);
     }
     addComment() {
-        event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInputco).value.trim();
         nText = (this.props.book.comments + "\n" + text + "               usuario:" + Meteor.user().username +".");
-        Books.update(this.props.book._id, {
-            $set: { comments: nText },
-        });
+        Meteor.call('books.addComment', this.props.book._id, nText);
     }
     cambiarImagen() {
-        event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInputIm).value.trim();
-        Books.update(this.props.book._id, {
-            $set: {
-                imagen: text,
-                mI: "hidden"
-            },
-        });
+        Meteor.call('books.cambiarImagen', this.props.book._id, text);
     }
     mostrarImagen() {
-        Books.update(this.props.book._id, {
-            $set: { mI: "" },
-        });
+        Meteor.call('books.mostrarImagen', this.props.book._id);
     }
 
     deleteThisTask() {

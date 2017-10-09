@@ -42,20 +42,11 @@ class App extends Component {
         console.log(text);
         this.setState({ busqueda: "" });
         for (i = 0; i < this.props.books.length; i++) {
-                Books.update(this.props.books[i]._id, {
-                    $set: {
-                        busquedaH: "hidden"
-                    },
-                });
+            Meteor.call('books.fore', this.props.books[i]._id);
         }
         for (i = 0; i < this.props.books.length; i++) {
             if (this.props.books[i].text == text) {
-                Books.update(this.props.books[i]._id, {
-                    $set: {
-                        busquedaH: "",
-                        botonBusqueda: ""
-                    },
-                });
+                Meteor.call('books.fore2', this.props.books[i]._id);
             }
         }
     }
@@ -69,12 +60,7 @@ class App extends Component {
         }
         if (paila) {
             for (i = 0; i < this.props.books.length; i++) {
-                Books.update(this.props.books[i]._id, {
-                    $set: {
-                        busquedaH: "",
-                        botonBusqueda: "hidden"
-                    },
-                });
+                Meteor.call('books.paila', this.props.books[i]._id);
             }
         }
         return (

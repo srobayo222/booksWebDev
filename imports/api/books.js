@@ -88,5 +88,57 @@ Meteor.methods({
         Books.update(bookId, {
             $set: { texto: nText },
         });
+    },
+    'books.darLike'(bookId, likes, nLikes ) {
+        Books.update(bookId, {
+             $set: { likes: nLikes },
+         });
+    },
+    'books.darDislike'(bookId, dLikes, nDlikes) {
+        Books.update(bookId, {
+                $set: { dislikes: nDlikes },
+            });
+        
+    },
+    'books.addComment'(bookId, nText) {
+        Books.update(bookId, {
+            $set: { comments: nText },
+        });
+    },
+    'books.cambiarImagen'(bookId, text) {
+        Books.update(bookId, {
+            $set: {
+                imagen: text,
+                mI: "hidden"
+            },
+        });
+    },
+    'books.mostrarImagen'(bookId) {
+        Books.update(bookId, {
+            $set: { mI: "" },
+        });
+    },
+    'books.paila'(bookId) {
+        Books.update(bookId, {
+            $set: {
+                busquedaH: "",
+                botonBusqueda: "hidden"
+            },
+        });
+    },
+    'books.fore'(bookId) {
+        Books.update(bookId, {
+            $set: {
+                busquedaH: "hidden"
+            },
+        });
+    },
+    'books.fore2'(bookId) {
+        Books.update(bookId, {
+            $set: {
+                busquedaH: "",
+                botonBusqueda: ""
+            },
+        });
     }
 });
