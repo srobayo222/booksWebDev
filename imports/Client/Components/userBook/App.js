@@ -6,6 +6,7 @@ import Book from './Book';
 import { Meteor } from 'meteor/meteor';
 import { Books } from "../../../api/books";
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import Header from "../globalusuariopro/header";
 
 // App component - represents the whole app
 class App extends Component {
@@ -65,9 +66,10 @@ class App extends Component {
         }
         return (
             <div className="container">
-                <header>
+                <Header/>
+                <br/><br/><br/><br/>
                     <h1>Books List</h1>
-                </header>
+
                 <AccountsUIWrapper />
                 <h3>Buscar Libro</h3>
                 <form className="new-task" onSubmit={this.handleChange.bind(this)} ><p><input
