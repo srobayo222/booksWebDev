@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
+import { Meteor } from 'meteor/meteor';
 import ReactDOM from 'react-dom';
 import { Books } from '../../../api/books';
 import { createContainer } from 'meteor/react-meteor-data';
@@ -71,22 +72,13 @@ class Book extends Component {
     editarGenre() {
         event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInputi).value.trim();
-        Books.update(this.props.book._id, {
-            $set: {
-                genero: text,
-                mG: "hidden"
-            },
-        });
+        Meteor.call('books.editarGenre', this.props.book._id, text);
     }
     mostrarGenero() {
-        Books.update(this.props.book._id, {
-            $set: { mG: "" },
-        });
+        Meteor.call('books.mostrarGenero', this.props.book._id);
     }
     salirBusqueda() {
-        Books.update(this.props.book._id, {
-            $set: { busquedaH: "hidden" },
-        });
+        Meteor.call('books.salirBusqueda', this.props.book._id);
     }
     darLike() {
         if (this.props.currentUser) {
@@ -109,28 +101,16 @@ class Book extends Component {
     }
 
     editarLan() {
-        event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInputo).value.trim();
-        Books.update(this.props.book._id, {
-            $set: {
-                idioma: text,
-                mL: "hidden"
-            },
-        });
+        Meteor.call('books.editarLan', this.props.book._id, text);
     }
     mostrarIdioma() {
-        Books.update(this.props.book._id, {
-            $set: { mL: "" },
-        });
+        Meteor.call('books.mostrarIdioma', this.props.book._id);
     }
 
     editarStory() {
-        event.preventDefault();
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-        nText = (this.props.book.texto + " "+ text);
-        Books.update(this.props.book._id, {
-            $set: { texto: nText },
-        });
+        Meteor.call('books.editarStory', this.props.book._id, this.props.book.texto, text);
     }
     addComment() {
         event.preventDefault();
@@ -157,7 +137,7 @@ class Book extends Component {
     }
 
     deleteThisTask() {
-            Books.remove(this.props.book._id);
+        Meteor.call('books.remove', this.props.book._id);
     }
 }
 Book.propTypes = {

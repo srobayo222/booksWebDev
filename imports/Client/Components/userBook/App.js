@@ -30,23 +30,7 @@ class App extends Component {
         // Find the text field via the React ref
         const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
-        Books.insert({
-            imagen: "https://d30y9cdsu7xlg0.cloudfront.net/png/3688-200.png",
-            text,
-            genero :"",
-            idioma :"",
-            texto :"",
-            likes: 0,
-            dislikes: 0,
-            comments: "",
-            mG:"hidden",
-            mL: "hidden",
-            mI: "hidden",
-            busquedaH: "",
-            botonBusqueda: "hidden",
-            owner: Meteor.userId(),           // _id of logged in user
-            username: Meteor.user().username,  // username of logged in user
-        });
+                Meteor.call('books.insert', text);
 
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
@@ -134,6 +118,8 @@ App.propTypes = {
 };
 
 export default createContainer(() => {
+
+    Meteor.subscribe('books');
     return {
         books: Books.find({}).fetch(),
         currentUser: Meteor.user(),
